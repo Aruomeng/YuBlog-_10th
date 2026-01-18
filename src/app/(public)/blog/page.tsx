@@ -7,8 +7,8 @@ export const metadata = {
   description: "探索技术、设计和 AI 的文章",
 };
 
-// 强制动态渲染
-export const dynamic = "force-dynamic";
+// 增量静态再生成，每60秒重新验证
+export const revalidate = 60;
 
 export default async function BlogPage() {
   const posts = await getAllPosts();

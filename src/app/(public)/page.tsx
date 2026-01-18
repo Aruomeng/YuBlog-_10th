@@ -10,8 +10,8 @@ import { TechStackWidget } from "@/components/widgets/tech-stack-widget";
 import Link from "next/link";
 import { getLatestPosts } from "@/lib/posts";
 
-// 强制动态渲染
-export const dynamic = "force-dynamic";
+// 增量静态再生成，每60秒重新验证
+export const revalidate = 60;
 
 export default async function Home() {
   const latestPosts = await getLatestPosts(3);

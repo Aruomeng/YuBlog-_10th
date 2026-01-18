@@ -1,7 +1,6 @@
 {
-  "/(public)/guestbook/page": "app/(public)/guestbook/page.js",
-  "/(public)/about/page": "app/(public)/about/page.js",
   "/(public)/page": "app/(public)/page.js",
-  "/(public)/blog/[slug]/page": "app/(public)/blog/[slug]/page.js",
+  "/(public)/guestbook/page": "app/(public)/guestbook/page.js",
+  "/(public)/projects/page": "app/(public)/projects/page.js",
   "/(public)/blog/page": "app/(public)/blog/page.js"
 }

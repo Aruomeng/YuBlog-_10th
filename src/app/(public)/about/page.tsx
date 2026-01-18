@@ -8,8 +8,8 @@ export const metadata = {
   description: "了解更多关于我的信息",
 };
 
-// 强制动态渲染
-export const dynamic = "force-dynamic";
+// 增量静态再生成，每60秒重新验证
+export const revalidate = 60;
 
 export default async function AboutPage() {
   const skills = await getAllSkills();

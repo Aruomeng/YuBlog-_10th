@@ -7,8 +7,8 @@ export const metadata = {
   description: "我的开源项目和作品集",
 };
 
-// 强制动态渲染
-export const dynamic = "force-dynamic";
+// 增量静态再生成，每60秒重新验证
+export const revalidate = 60;
 
 const statusLabels: Record<string, { label: string; className: string }> = {
   in_progress: { label: "进行中", className: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },

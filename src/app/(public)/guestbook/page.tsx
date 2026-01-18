@@ -3,7 +3,7 @@ import { getGuestbookEntries } from "@/actions/guestbook";
 import { GuestbookForm } from "@/components/guestbook-form";
 import { GuestbookEntries } from "@/components/guestbook-entries";
 
-// 强制动态渲染，避免构建时连接数据库
+// 留言墙需要动态检查登录状态
 export const dynamic = "force-dynamic";
 
 export const metadata = {
