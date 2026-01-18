@@ -78,14 +78,22 @@ export default async function BlogPostPage({ params }: Props) {
         <header className="mb-12">
           {/* 标签 */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {post.tags.map((tag) => (
-              <span
-                key={tag.id}
-                className="px-3 py-1 text-xs rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20"
-              >
-                {tag.name}
-              </span>
-            ))}
+            {post.tags.map((tag) => {
+              const color = tag.color || "#8B5CF6";
+              return (
+                <span
+                  key={tag.id}
+                  className="px-3 py-1 text-xs rounded-full border"
+                  style={{
+                    backgroundColor: `${color}15`,
+                    color: color,
+                    borderColor: `${color}30`,
+                  }}
+                >
+                  {tag.name}
+                </span>
+              );
+            })}
           </div>
 
           {/* 标题 */}

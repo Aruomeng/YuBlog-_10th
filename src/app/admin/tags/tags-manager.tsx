@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { DataTable } from "@/components/admin/data-table";
 import { Modal, FormField, Input, Button } from "@/components/admin/modal";
+import { ColorPicker } from "@/components/admin/color-picker";
 import { createTag, updateTag, deleteTag } from "@/actions/admin";
 
 interface Tag {
@@ -147,20 +148,11 @@ export function TagsManager({ tags }: TagsManagerProps) {
             />
           </FormField>
 
-          <FormField label="颜色 (可选)">
-            <div className="flex gap-2">
-              <Input
-                placeholder="#8B5CF6"
-                value={formData.color}
-                onChange={(e) => setFormData((prev) => ({ ...prev, color: e.target.value }))}
-              />
-              {formData.color && (
-                <div
-                  className="w-10 h-10 rounded-lg border border-zinc-700"
-                  style={{ backgroundColor: formData.color }}
-                />
-              )}
-            </div>
+          <FormField label="标签颜色">
+            <ColorPicker
+              value={formData.color}
+              onChange={(color) => setFormData((prev) => ({ ...prev, color }))}
+            />
           </FormField>
 
           <div className="flex justify-end gap-3 pt-4">

@@ -110,6 +110,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/tags/page.js"
+    ],
+    "/admin/posts/[id]/edit/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/posts/[id]/edit/loading.js"
+    ],
+    "/admin/posts/[id]/edit/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/posts/[id]/edit/page.js"
     ]
   }
 }

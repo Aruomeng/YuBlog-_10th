@@ -13,6 +13,7 @@ interface Tag {
   id: number;
   name: string;
   slug: string;
+  color: string | null;
 }
 
 interface Post {
@@ -294,19 +295,24 @@ export function EditPostForm({ post, tags }: EditPostFormProps) {
               <p className="text-zinc-500 text-sm">暂无标签</p>
             ) : (
               <div className="flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <button
-                    key={tag.id}
-                    onClick={() => handleTagToggle(tag.id)}
-                    className={`px-3 py-1.5 text-sm rounded-lg border transition-colors ${
-                      formData.tagIds.includes(tag.id)
-                        ? "bg-purple-500/20 border-purple-500/50 text-purple-400"
-                        : "border-zinc-700 text-zinc-400 hover:border-zinc-600"
-                    }`}
-                  >
-                    {tag.name}
-                  </button>
-                ))}
+                {tags.map((tag) => {
+                  const color = tag.color || "#8B5CF6";
+                  const isSelected = formData.tagIds.includes(tag.id);
+                  return (
+                    <button
+                      key={tag.id}
+                      onClick={() => handleTagToggle(tag.id)}
+                      className="px-3 py-1.5 text-sm rounded-lg border transition-colors"
+                      style={{
+                        backgroundColor: isSelected ? `${color}20` : "transparent",
+                        borderColor: isSelected ? `${color}50` : "#3f3f46",
+                        color: isSelected ? color : "#a1a1aa",
+                      }}
+                    >
+                      {tag.name}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </DataCard>

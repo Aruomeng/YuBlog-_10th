@@ -12,7 +12,7 @@ interface Post {
   viewCount: number | null;
   likeCount: number | null;
   createdAt: Date | null;
-  postTags: { tag: { id: number; name: string } }[];
+  postTags: { tag: { id: number; name: string; color: string | null } }[];
 }
 
 interface PostsActionsProps {
@@ -55,14 +55,21 @@ export function PostsActions({ posts }: PostsActionsProps) {
       title: "标签",
       render: (post: Post) => (
         <div className="flex flex-wrap gap-1">
-          {post.postTags.map((pt) => (
-            <span
-              key={pt.tag.id}
-              className="px-2 py-0.5 text-xs rounded-full bg-purple-500/10 text-purple-400"
-            >
-              {pt.tag.name}
-            </span>
-          ))}
+          {post.postTags.map((pt) => {
+            const color = pt.tag.color || "#8B5CF6";
+            return (
+              <span
+                key={pt.tag.id}
+                className="px-2 py-0.5 text-xs rounded-full"
+                style={{
+                  backgroundColor: `${color}20`,
+                  color: color,
+                }}
+              >
+                {pt.tag.name}
+              </span>
+            );
+          })}
         </div>
       ),
     },
