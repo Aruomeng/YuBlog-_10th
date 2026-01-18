@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { MarkdownEditor } from "@/components/admin/markdown-editor";
 import { DataCard } from "@/components/admin/stats-card";
 import { FormField, Input, Textarea, Button } from "@/components/admin/modal";
+import { InlineTagCreator } from "@/components/admin/inline-tag-creator";
 import { updatePost } from "@/actions/admin";
 import { useSidebar } from "@/components/admin/sidebar-context";
 import { cn } from "@/lib/utils";
@@ -292,9 +293,9 @@ export function EditPostForm({ post, tags }: EditPostFormProps) {
           {/* Tags */}
           <DataCard title="标签">
             {tags.length === 0 ? (
-              <p className="text-zinc-500 text-sm">暂无标签</p>
+              <p className="text-zinc-500 text-sm mb-3">暂无标签</p>
             ) : (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-3">
                 {tags.map((tag) => {
                   const color = tag.color || "#8B5CF6";
                   const isSelected = formData.tagIds.includes(tag.id);
@@ -315,6 +316,15 @@ export function EditPostForm({ post, tags }: EditPostFormProps) {
                 })}
               </div>
             )}
+            <InlineTagCreator
+              onTagCreated={(newTag) => {
+                // 自动选中新创建的标签
+                setFormData((prev) => ({
+                  ...prev,
+                  tagIds: [...prev.tagIds, newTag.id],
+                }));
+              }}
+            />
           </DataCard>
         </div>
       </div>

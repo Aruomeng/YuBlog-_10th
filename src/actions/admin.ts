@@ -187,11 +187,12 @@ export async function deleteProject(id: number) {
 
 // ==================== 标签管理 ====================
 
-export async function createTag(data: { name: string; slug: string; color?: string }) {
+export async function createTag(data: { name: string; slug: string; color?: string | null }) {
   try {
-    await db.insert(tags).values(data);
+    const [tag] = await db.insert(tags).values(data).returning();
     revalidatePath("/admin/tags");
-    return { success: true };
+    revalidatePath("/admin/posts/new");
+    return { success: true, tag };
   } catch (error) {
     console.error("Failed to create tag:", error);
     return { success: false, error: "创建标签失败" };
