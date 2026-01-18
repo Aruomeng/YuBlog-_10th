@@ -106,6 +106,70 @@ export function NewPostForm({ tags }: NewPostFormProps) {
     });
   };
 
+  // 处理 MD 文件上传
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.md') && !file.name.endsWith('.markdown')) {
+      alert('请上传 .md 或 .markdown 文件');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      
+      // 尝试从内容中提取标题（第一个 # 标题或文件名）
+      let title = '';
+      let bodyContent = content;
+      
+      // 检查是否有 YAML frontmatter
+      const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+      if (frontmatterMatch) {
+        const frontmatter = frontmatterMatch[1];
+        bodyContent = frontmatterMatch[2].trim();
+        
+        // 从 frontmatter 提取标题
+        const titleMatch = frontmatter.match(/title:\s*["']?(.+?)["']?\s*$/m);
+        if (titleMatch) {
+          title = titleMatch[1];
+        }
+      }
+      
+      // 如果没有从 frontmatter 获取标题，尝试从内容的第一个 # 开头行获取
+      if (!title) {
+        const h1Match = bodyContent.match(/^#\s+(.+)$/m);
+        if (h1Match) {
+          title = h1Match[1];
+          // 从内容中移除这个标题行
+          bodyContent = bodyContent.replace(/^#\s+.+\n?/, '').trim();
+        }
+      }
+      
+      // 如果还是没有标题，使用文件名
+      if (!title) {
+        title = file.name.replace(/\.(md|markdown)$/, '');
+      }
+      
+      // 更新表单数据
+      setFormData((prev) => ({
+        ...prev,
+        title,
+        slug: prev.slug || title
+          .toLowerCase()
+          .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+          .replace(/^-|-$/g, ''),
+        content: bodyContent,
+      }));
+    };
+    
+    reader.readAsText(file);
+    
+    // 重置 input 以允许重复上传同一文件
+    e.target.value = '';
+  };
+
   return (
     <div className="space-y-8">
       {/* Header - 沉浸模式下隐藏 */}
@@ -120,6 +184,21 @@ export function NewPostForm({ tags }: NewPostFormProps) {
           <p className="text-zinc-400">创建一篇新的博客文章</p>
         </div>
         <div className="flex items-center gap-3">
+          {/* 上传 MD 文件按钮 */}
+          <label className="cursor-pointer">
+            <input
+              type="file"
+              accept=".md,.markdown"
+              onChange={handleFileUpload}
+              className="hidden"
+            />
+            <span className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-zinc-400 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 hover:text-white transition-colors">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              上传 MD
+            </span>
+          </label>
           <Button
             variant="secondary"
             onClick={() => handleSubmit(false)}
