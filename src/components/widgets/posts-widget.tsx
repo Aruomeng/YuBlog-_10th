@@ -11,7 +11,7 @@ interface PostsWidgetProps {
 
 export function PostsWidget({ posts }: PostsWidgetProps) {
   return (
-    <BentoCard colSpan={3} rowSpan={1} glowColor="rgba(59, 130, 246, 0.15)">
+    <BentoCard colSpan={2} rowSpan={1} glowColor="rgba(59, 130, 246, 0.15)">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-white flex items-center gap-2">
           <span className="text-xl">📝</span>

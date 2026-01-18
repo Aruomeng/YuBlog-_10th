@@ -1,9 +1,5 @@
 {
-  "/(public)/guestbook/page": "app/(public)/guestbook/page.js",
-  "/(public)/blog/[slug]/page": "app/(public)/blog/[slug]/page.js",
-  "/admin/page": "app/admin/page.js",
-  "/admin/posts/page": "app/admin/posts/page.js",
-  "/(public)/page": "app/(public)/page.js",
+  "/api/chat/route": "app/api/chat/route.js",
   "/(public)/blog/page": "app/(public)/blog/page.js",
-  "/admin/posts/[id]/edit/page": "app/admin/posts/[id]/edit/page.js"
+  "/(public)/page": "app/(public)/page.js"
 }
